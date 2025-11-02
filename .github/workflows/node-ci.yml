@@ -55,20 +55,20 @@ jobs:
       with:
         fetch-depth: 0 
 
-    - name: Update asitha2.json with current timestamp
+    - name: Update sri_bot.json with current timestamp
       id: update_time
       run: |
         CURRENT_TIME=$(date +%s%3N)
-        echo "{"lastActive": "$CURRENT_TIME"}" > asitha2.json
+        echo "{"lastActive": "$CURRENT_TIME"}" > sri_bot.json
         
     - name: Setup Git User
       run: |
-        git config user.name "MR Asitha ❤️"
+        git config user.name "WalukaPahan"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
     - name: Commit and Push Changes
       id: commit
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: "MR Asitha ❤️: Keep Alive ping"
+        commit_message: "SRI-BOT 🇱🇰: Keep Alive ping"
         token: ${{ secrets.GITHUB_TOKEN }}
