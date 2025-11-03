@@ -1,0 +1,45 @@
+name: Node.js CI/CD and Keep Alive  
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 */5 * * *'   # හැම පැය 5කට restart වෙනවා
+  workflow_dispatch:         # මැනුවල්ව run කරන්නත් පුලුවන්  
+
+jobs:
+  build_and_start:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+          
+    steps:
+      - name: Checkout repository  
+        uses: actions/checkout@v4  
+
+      - name: Setup Node.js  
+        uses: actions/setup-node@v4  
+        with:  
+          node-version: ${{ matrix.node-version }}  
+
+      - name: Install dependencies  
+        run: npm install  
+
+      - name: Install PM2 process manager  
+        run: npm install -g pm2  
+
+      - name: Start app with PM2  
+        run: pm2 start index.js --name node-app  
+
+      - name: Keep workflow alive  
+        run: |  
+          echo "Keeping the workflow alive..."  
+          while true; do  
+            echo "✅ Bot is running... ($(date))"  
+            sleep 1800   # 30 minutes sleep  
+          done
